@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration and Login App</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+</head>
+<body>
+
+<main role="main" class="container">
+
+    <div th:switch="${theEldestLords}">
+        <div th:case="*">
+            <h2>Lords:</h2>
+            <table border="1" th:cellpadding="5">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="theEldestLords : ${theEldestLords}">
+                    <td style="padding: 5px 5px 5px 5px" th:text="${theEldestLords.getId()}"></td>
+                    <td style="padding: 5px 5px 5px 5px" th:text="${theEldestLords.getName()}"></td>
+                    <td style="padding: 5px 5px 5px 5px" th:text="${theEldestLords.getAge()}"></td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</main>
+</body>
+</html>
