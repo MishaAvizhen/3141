@@ -5,6 +5,9 @@ package com.avizhen.dto;
 public class UniverseCreateDto {
     private String title;
 
+    public UniverseCreateDto() {
+    }
+
     public UniverseCreateDto(String title) {
         this.title = title;
     }
@@ -16,4 +19,5 @@ public class UniverseCreateDto {
     public void setTitle(String title) {
         this.title = title;
     }
+
 }

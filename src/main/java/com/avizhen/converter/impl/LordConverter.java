@@ -3,7 +3,9 @@ package com.avizhen.converter.impl;
 import com.avizhen.converter.Converter;
 import com.avizhen.dto.LordCreateDto;
 import com.avizhen.entity.Lord;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LordConverter implements Converter<Lord, LordCreateDto> {
 
 

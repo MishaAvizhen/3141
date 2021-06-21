@@ -10,9 +10,10 @@ public interface LordService {
 
     void appointToRulePlanet(Integer lordId);
 
-    List<Lord> findLordWithoutPlanet(Integer universeId);
+    List<Lord> findLordWithoutPlanet();
 
     List<Lord> findTheEldestLords();
+    List<Lord> findAllLords();
 
 
 }

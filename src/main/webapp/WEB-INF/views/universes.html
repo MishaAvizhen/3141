@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>3141</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+</head>
+<body>
+
+<main role="main" class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <div th:switch="${universes}">
+            <div th:case="*">
+                <h2>Universes:</h2>
+                <table border="1" th:cellpadding="5">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="universe : ${universes}">
+                        <td style="padding: 5px 5px 5px 5px" th:text="${universe.getId()}"></td>
+                        <td style="padding: 5px 5px 5px 5px" th:text="${universe.getTitle()}"></td>
+                        <td style="padding: 5px 5px 5px 5px">
+                            <form th:method="DELETE" th:action="@{/universe/{id}(id=${universe.getId()})}">
+                                <input type="submit" value="Delete"/>
+                            </form>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <br/>
+            <hr/>
+
+            <form th:method="GET" th:action="@{/universes/new}">
+                <div class="col-md-6 ">
+                    <input type="submit" name="create-submit" id="create-submit"
+                           class="form-control btn btn-success" value="Create universe"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>
