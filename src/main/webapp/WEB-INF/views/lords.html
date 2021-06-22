@@ -33,6 +33,9 @@
                         <td style="padding: 5px 5px 5px 5px" th:text="${lord.getName()}"></td>
                         <td style="padding: 5px 5px 5px 5px" th:text="${lord.getAge()}"></td>
                         <td style="padding: 5px 5px 5px 5px">
+                            <form th:method="GET" th:action="@{/lord/{id}(id=${lord.getId()})}">
+                                <input type="submit" value="Choose planet"/>
+                            </form>
 
                         </td>
 
@@ -49,12 +52,19 @@
                            class="form-control btn btn-success" value="Show lords without universe"/>
                 </div>
             </form>
+            <form th:method="GET" th:action="@{/lordTheEldest}">
+                <div class="col-md-6 ">
+                    <input type="submit" name="eldest-submit" id="eldest-submit"
+                           class="form-control btn btn-success" value="Show the eldest lords"/>
+                </div>
+            </form>
             <form th:method="GET" th:action="@{/lords/new}">
                 <div class="col-md-6 ">
                     <input type="submit" name="create-submit" id="create-submit"
-                           class="form-control btn btn-success" value="Create lord"/>
+                           class="form-control btn btn-info" value="Create lord"/>
                 </div>
             </form>
+
         </div>
     </div>
 </main>

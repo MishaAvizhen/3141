@@ -11,4 +11,9 @@ public interface UniverseService {
     void deleteUniverse(Integer universeId);
 
     List<Universe> getAllUniversity();
+
+    List<Universe> getAllFreeUniversity();
+
+
+
     }

@@ -4,27 +4,33 @@ import com.avizhen.converter.impl.LordConverter;
 import com.avizhen.dto.LordCreateDto;
 import com.avizhen.entity.Lord;
 import com.avizhen.entity.Universe;
+import com.avizhen.enums.Status;
 import com.avizhen.repository.LordRepository;
+import com.avizhen.repository.UniverseRepository;
 import com.avizhen.service.LordService;
 import com.avizhen.service.UniverseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LordServiceImpl implements LordService {
     private LordRepository lordRepository;
     private LordConverter lordConverter;
     private UniverseService universeService;
+    private UniverseRepository universeRepository;
 
     @Autowired
-    public LordServiceImpl(LordRepository lordRepository, LordConverter lordConverter, UniverseService universeService) {
+    public LordServiceImpl(LordRepository lordRepository, LordConverter lordConverter, UniverseService universeService, UniverseRepository universeRepository) {
 
         this.lordRepository = lordRepository;
         this.lordConverter = lordConverter;
         this.universeService = universeService;
+        this.universeRepository = universeRepository;
     }
 
     @Override
@@ -34,8 +40,12 @@ public class LordServiceImpl implements LordService {
     }
 
     @Override
-    public void appointToRulePlanet(Integer lordId) {
-
+    public void appointToRulePlanet(Integer lordId, Integer universeId) {
+        Universe universe = universeRepository.getOne(universeId);
+        Lord lord = lordRepository.getOne(lordId);
+        universe.setStatus(Status.BUSY);
+        universe.setLord(lord);
+        universeRepository.save(universe);
     }
 
     @Override
@@ -52,7 +62,11 @@ public class LordServiceImpl implements LordService {
 
     @Override
     public List<Lord> findTheEldestLords() {
-        return lordRepository.findAll();
+        List<Lord> lordList = lordRepository.findAll();
+        return lordList.stream()
+                .sorted(Comparator.comparingInt(Lord::getAge))
+                .limit(10)
+                .collect(Collectors.toList());
     }
 
     @Override
