@@ -13,6 +13,7 @@ public interface LordService {
     List<Lord> findLordWithoutPlanet();
 
     List<Lord> findTheEldestLords();
+
     List<Lord> findAllLords();
 
 
