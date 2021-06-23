@@ -1,11 +1,10 @@
 package com.avizhen.test.testData;
 
 import com.avizhen.entity.Lord;
+import com.avizhen.entity.Universe;
+import com.avizhen.enums.Status;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LordTestData {
     private Map<Integer, Lord> lordsForTest = new HashMap<>();
@@ -21,19 +20,44 @@ public class LordTestData {
         }
         return INSTANCE;
     }
-
-    private void initLordTestData() {
-        buildLord("lord", 1, 18);
-        buildLord("test", 2,22);
+    public Integer getNextId() {
+        return lordsForTest.size() + 1;
     }
 
-    private Lord buildLord(String name, Integer id, Integer age) {
-        Lord testLord = lordsForTest.get(1);
-        Lord lord = new Lord();
-        lord.setId(id);
-        lord.setName(name);
-        lord.setAge(age);
-        return lord;
+    private void initLordTestData() {
+        Lord lordFree = new Lord();
+        lordFree.setId(1);
+        lordFree.setName("lord");
+        lordFree.setAge(18);
+        assignUniversityToLord(lordFree, Collections.emptyList());
+        saveTestLord(lordFree);
+        Lord lordBusy = new Lord();
+        List<Universe> universeList = new ArrayList<>();
+        universeList.add(UniverseTestData.getInstance().findById(2));
+
+        lordBusy.setId(2);
+        lordBusy.setName("test");
+        lordBusy.setAge(22);
+        assignUniversityToLord(lordBusy, universeList);
+        saveTestLord(lordBusy);
+    }
+
+    private void assignUniversityToLord(Lord lordBusy, List<Universe> universeList) {
+        lordBusy.setLordUniverseList(universeList);
+        for (Universe universe : universeList) {
+            universe.setLord(lordBusy);
+        }
+    }
+
+
+    public List<Lord> getAllTestLordsWithoutPlanet() {
+        List<Lord> lordList = new ArrayList<>();
+        for (Lord lord : lordsForTest.values()) {
+            if (lord.getLordUniverseList().isEmpty()) {
+                lordList.add(lord);
+            }
+        }
+        return lordList;
     }
 
     public List<Lord> getAllTestLords() {
@@ -41,6 +65,22 @@ public class LordTestData {
     }
 
 
+    public Lord findTestLordById(Integer id) {
+        for (Lord lord : lordsForTest.values()) {
+            if (lord.getId().equals(id)) {
+                return lord;
+            }
+        }
+        return null;
+    }
+
+    public void appointToRuleTestPlanet(Integer lordId, Integer universeId) {
+        Lord testLordById = findTestLordById(lordId);
+        Universe testUniverse = UniverseTestData.getInstance().findById(universeId);
+        testUniverse.setStatus(Status.BUSY);
+        testUniverse.setLord(testLordById);
+        saveTestLord(testLordById);
+    }
 
     public Lord saveTestLord(Lord lord) {
         lordsForTest.put(lord.getId(), lord);

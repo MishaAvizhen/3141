@@ -1,6 +1,5 @@
 package com.avizhen.test.testData;
 
-import com.avizhen.entity.Lord;
 import com.avizhen.entity.Universe;
 import com.avizhen.enums.Status;
 
@@ -25,11 +24,13 @@ public class UniverseTestData {
     }
 
     private void initUniverseTestData() {
-        buildUniverse("universe", 1,Status.FREE);
-        buildUniverse("test", 2,Status.BUSY);
+        saveTestUniverse( buildTestUniverse(1, "universe", Status.FREE));
+        saveTestUniverse( buildTestUniverse(2, "test", Status.BUSY));
     }
-
-    private Universe findById(Integer id) {
+    public Integer getNextId() {
+        return universesForTest.size() + 1;
+    }
+    public Universe findById(Integer id) {
         for (Universe universe : universesForTest.values()) {
             if (universe.getId().equals(id)) {
                 return universe;
@@ -38,25 +39,22 @@ public class UniverseTestData {
         return null;
     }
 
-    private void delete(Integer id) {
-        Universe universe = findById(id);
-        if (universe != null) {
+    public Universe deleteTestUniverse(Integer id) {
+        Universe universeToDelete = findById(id);
+        if (universeToDelete != null) {
             universesForTest.remove(id);
+
         }
+
+        return null;
     }
 
-    private Universe buildUniverse(String title, Integer id, Status status) {
-
-        Lord testLord = new Lord();
-        testLord.setId(1);
-        testLord.setName("lord");
-        testLord.setAge(20);
+    private Universe buildTestUniverse(Integer id, String title, Status status) {
 
         Universe universe = new Universe();
         universe.setId(id);
         universe.setTitle(title);
         universe.setStatus(status);
-        universe.setLord(testLord);
 
         return universe;
     }
@@ -66,9 +64,8 @@ public class UniverseTestData {
     }
 
 
-
     public Universe saveTestUniverse(Universe universe) {
-        universesForTest.put(1, universe);
+        universesForTest.put(getNextId(), universe);
         return universe;
     }
 }

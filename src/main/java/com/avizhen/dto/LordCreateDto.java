@@ -12,12 +12,6 @@ public class LordCreateDto {
 
     public LordCreateDto() {
     }
-
-    public LordCreateDto(Integer age, String name) {
-        this.age = age;
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }

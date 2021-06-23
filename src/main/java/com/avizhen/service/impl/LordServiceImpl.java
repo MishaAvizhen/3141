@@ -53,7 +53,9 @@ public class LordServiceImpl implements LordService {
         List<Lord> lordsWithUniversity = new ArrayList<>();
         List<Universe> allUniversity = universeService.getAllUniversity();
         for (Universe universe : allUniversity) {
-            lordsWithUniversity.add(universe.getLord());
+            if (universe.getLord() != null) {
+                lordsWithUniversity.add(universe.getLord());
+            }
         }
         List<Lord> allLords = lordRepository.findAll();
         allLords.removeAll(lordsWithUniversity);
