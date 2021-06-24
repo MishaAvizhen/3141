@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -38,9 +39,10 @@ public class LordController {
         return "newLord";
     }
     @PostMapping("/lord")
-    public String createLord(LordCreateDto lordCreateDto, Model model) {
+    public String createLord(LordCreateDto lordCreateDto, Model model, RedirectAttributes redirectAttributes) {
         Lord lord = lordService.createLord(lordCreateDto);
         model.addAttribute("lord", lord);
+        redirectAttributes.addFlashAttribute("msg", "Lord was created");
         return "redirect:/lords";
     }
     @GetMapping("/lordWithoutUniverse")
